@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { World } from "./World";
 
 const viewport = {
   width: window.innerWidth,
@@ -23,11 +24,6 @@ const updateRenderer = () => {
 };
 updateRenderer();
 
-const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
-const boxMaterial = new THREE.MeshBasicMaterial({ wireframe: true });
-const box = new THREE.Mesh(boxGeometry, boxMaterial);
-scene.add(box);
-
 window.addEventListener("resize", () => {
   viewport.width = window.innerWidth;
   viewport.height = window.innerHeight;
@@ -39,8 +35,34 @@ window.addEventListener("resize", () => {
   updateRenderer();
 });
 
+/**
+ * Handle key press tracking
+ */
+const pressedKeys = new Set();
+
+document.addEventListener("keydown", (event) => {
+  pressedKeys.add(event.key);
+});
+
+document.addEventListener("keyup", (event) => {
+  pressedKeys.delete(event.key);
+});
+
+const updateWorld = World(scene);
+
+/**
+ * Game Loop - world rendering
+ */
+const clock = new THREE.Clock();
+let lastTime = 0;
 const gameLoop = () => {
+  const currentTime = clock.getElapsedTime();
+  const deltaTime = currentTime - lastTime;
+  lastTime = currentTime;
+
+  updateWorld(deltaTime, pressedKeys);
   renderer.render(scene, camera);
+
   window.requestAnimationFrame(gameLoop);
 };
 gameLoop();
