@@ -1,8 +1,12 @@
 import * as THREE from "three";
+import textureImage from "./textures/3.png";
 
 export function Spaceship(scene) {
+  const textureLoader = new THREE.TextureLoader();
+  const matcapTexture = textureLoader.load(textureImage);
+
   const shipGeomtery = new THREE.ConeGeometry(0.3, 1, 8);
-  const shipMaterial = new THREE.MeshBasicMaterial({ wireframe: true });
+  const shipMaterial = new THREE.MeshMatcapMaterial({ matcap: matcapTexture });
   const ship = new THREE.Mesh(shipGeomtery, shipMaterial);
   scene.add(ship);
 
