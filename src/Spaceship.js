@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { DirectionalMovement } from "./traits/DirectionalMovement";
 
 export function Spaceship(scene) {
   const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
@@ -6,23 +7,35 @@ export function Spaceship(scene) {
   const box = new THREE.Mesh(boxGeometry, boxMaterial);
   scene.add(box);
 
-  const speed = 5;
+  let targetSpeed = 6;
+
+  const movement = DirectionalMovement();
 
   return (deltaTime, pressedKeys) => {
+    const position = movement.update(deltaTime);
+
+    box.position.x = position.x;
+    box.position.y = position.y;
+
+    movement.setSpeed(0);
     if (pressedKeys.has("ArrowRight")) {
-      box.position.x += speed * deltaTime;
+      movement.setDirection(Math.PI / 2);
+      movement.setSpeed(targetSpeed);
     }
 
     if (pressedKeys.has("ArrowLeft")) {
-      box.position.x -= speed * deltaTime;
+      movement.setDirection((Math.PI * 3) / 2);
+      movement.setSpeed(targetSpeed);
     }
 
     if (pressedKeys.has("ArrowUp")) {
-      box.position.y += speed * deltaTime;
+      movement.setDirection(0);
+      movement.setSpeed(targetSpeed);
     }
 
     if (pressedKeys.has("ArrowDown")) {
-      box.position.y -= speed * deltaTime;
+      movement.setDirection(Math.PI);
+      movement.setSpeed(targetSpeed);
     }
   };
 }
