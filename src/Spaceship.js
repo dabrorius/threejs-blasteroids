@@ -1,5 +1,6 @@
 import * as THREE from "three";
-import textureImage from "./textures/3.png";
+import { BulletFactory } from "./BulletFactory";
+import textureImage from "./textures/8.png";
 
 export function Spaceship(scene) {
   const textureLoader = new THREE.TextureLoader();
@@ -10,10 +11,14 @@ export function Spaceship(scene) {
   const ship = new THREE.Mesh(shipGeomtery, shipMaterial);
   scene.add(ship);
 
+  const bullets = [];
+
+  const bulletFactory = BulletFactory(scene);
+
   // const movement = DirectionalMovement();
-  const turnSpeed = Math.PI * 2;
+  const turnSpeed = Math.PI;
   let direction = 0;
-  const acceleration = 50;
+  const acceleration = 30;
   const deacceleration = 10;
 
   const maxSpeed = 5;
@@ -22,13 +27,20 @@ export function Spaceship(scene) {
 
   const position = { x: 0, y: 0 };
 
+  let bulletTimer = 0;
+  let bulletDelay = 0.1;
+
   return (deltaTime, pressedKeys) => {
+    bulletTimer = Math.max(0, bulletTimer - deltaTime);
+
     position.x += deltaTime * speedX;
     position.y += deltaTime * speedY;
 
     ship.position.x = position.x;
     ship.position.y = position.y;
     ship.rotation.z = direction - Math.PI / 2;
+
+    bullets.forEach((bullet) => bullet(deltaTime));
 
     if (pressedKeys.has("ArrowUp")) {
       const unlimitedSpeedX =
@@ -48,6 +60,17 @@ export function Spaceship(scene) {
       direction += turnSpeed * deltaTime;
     } else if (pressedKeys.has("ArrowRight")) {
       direction -= turnSpeed * deltaTime;
+    }
+
+    if (pressedKeys.has(" ")) {
+      if (bulletTimer === 0) {
+        const bullet = bulletFactory(
+          { x: position.x, y: position.y },
+          direction
+        );
+        bullets.push(bullet);
+        bulletTimer = bulletDelay;
+      }
     }
   };
 }

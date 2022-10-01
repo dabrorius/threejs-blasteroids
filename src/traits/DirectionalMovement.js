@@ -1,4 +1,7 @@
-export function DirectionalMovement(startPosition = { x: 0, y: 0 }) {
+export function DirectionalMovement(
+  startPosition = { x: 0, y: 0 },
+  warp = true
+) {
   let position = startPosition;
 
   let speed = 0;
@@ -8,23 +11,25 @@ export function DirectionalMovement(startPosition = { x: 0, y: 0 }) {
 
   return {
     update: (deltaTime) => {
-      const speedX = Math.sin(direction) * speed;
-      const speedY = Math.cos(direction) * speed;
+      const speedX = Math.cos(direction) * speed;
+      const speedY = Math.sin(direction) * speed;
 
       position.x += speedX * deltaTime;
       position.y += speedY * deltaTime;
 
-      if (position.x > warpX) {
-        position.x = -warpX;
-      }
-      if (position.x < -warpX) {
-        position.x = warpX;
-      }
-      if (position.y > warpY) {
-        position.y = -warpY;
-      }
-      if (position.y < -warpY) {
-        position.y = warpY;
+      if (warp) {
+        if (position.x > warpX) {
+          position.x = -warpX;
+        }
+        if (position.x < -warpX) {
+          position.x = warpX;
+        }
+        if (position.y > warpY) {
+          position.y = -warpY;
+        }
+        if (position.y < -warpY) {
+          position.y = warpY;
+        }
       }
 
       return position;

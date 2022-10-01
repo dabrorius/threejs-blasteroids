@@ -3,7 +3,7 @@ import { DirectionalMovement } from "./traits/DirectionalMovement";
 
 export function AsteroidFactory(scene) {
   const asteroidGeometry = new THREE.DodecahedronGeometry(0.5);
-  const asteroidMaterial = new THREE.MeshBasicMaterial({ wireframe: true });
+  const asteroidMaterial = new THREE.MeshNormalMaterial();
 
   return (initialPosition) => {
     const asteroidMesh = new THREE.Mesh(asteroidGeometry, asteroidMaterial);
