@@ -13,7 +13,7 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   100
 );
-camera.position.z = 4;
+camera.position.z = 10;
 scene.add(camera);
 
 const canvas = document.querySelector(".gameCanvas");

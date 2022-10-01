@@ -1,18 +1,13 @@
 import * as THREE from "three";
+import { Spaceship } from "./Spaceship";
 
 export function World(scene) {
-  const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
-  const boxMaterial = new THREE.MeshBasicMaterial({ wireframe: true });
-  const box = new THREE.Mesh(boxGeometry, boxMaterial);
-  scene.add(box);
+  const entities = new Set();
+
+  const spaceship = Spaceship(scene);
+  entities.add(spaceship);
 
   return (deltaTime, pressedKeys) => {
-    if (pressedKeys.has("ArrowRight")) {
-      box.position.x += 1 * deltaTime;
-    }
-
-    if (pressedKeys.has("ArrowLeft")) {
-      box.position.x -= 1 * deltaTime;
-    }
+    entities.forEach((entity) => entity(deltaTime, pressedKeys));
   };
 }
