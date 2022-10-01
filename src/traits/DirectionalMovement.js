@@ -31,5 +31,6 @@ export function DirectionalMovement(startPosition = { x: 0, y: 0 }) {
     },
     setDirection: (newDirection) => (direction = newDirection),
     setSpeed: (newSpeed) => (speed = newSpeed),
+    getDirection: () => direction,
   };
 }
