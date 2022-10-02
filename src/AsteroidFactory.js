@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { DirectionalMovement } from "./traits/DirectionalMovement";
 
-export function AsteroidFactory() {
+export function AsteroidFactory(world) {
   const asteroidGeometry = new THREE.DodecahedronGeometry(0.5);
   const asteroidMaterial = new THREE.MeshNormalMaterial();
 
@@ -17,13 +17,27 @@ export function AsteroidFactory() {
 
     return {
       mesh: asteroidMesh,
-      update: (deltaTime) => {
+      hitbox: {
+        x: 0,
+        y: 0,
+        r: 0.5,
+        type: "asteroid",
+      },
+      update: function (deltaTime) {
         const position = movement.update(deltaTime);
 
         asteroidMesh.position.x = position.x;
         asteroidMesh.position.y = position.y;
         asteroidMesh.rotation.x += deltaTime * rotationSpeedX;
         asteroidMesh.rotation.y += deltaTime * rotationSpeedY;
+
+        this.hitbox.x = position.x;
+        this.hitbox.y = position.y;
+      },
+      onCollision: function (collider) {
+        if (collider.hitbox.type === "bullet") {
+          world.removeEntity(this);
+        }
       },
     };
   };
