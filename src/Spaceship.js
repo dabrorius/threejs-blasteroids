@@ -10,8 +10,6 @@ const shipMaterial = new THREE.MeshMatcapMaterial({ matcap: matcapTexture });
 
 const bulletDelay = 0.1;
 const turnSpeed = Math.PI;
-const acceleration = 30;
-const maxSpeed = 5;
 
 export class Spaceship {
   constructor() {
@@ -60,13 +58,15 @@ export class Spaceship {
   }
 
   #accelerate(deltaTime) {
+    const { shipMaxSpeed, shipAcceleration } = this.world.guiConfig;
+
     const speedX =
-      this.speedX + acceleration * deltaTime * Math.cos(this.direction);
-    this.speedX = Math.sign(speedX) * Math.min(maxSpeed, Math.abs(speedX));
+      this.speedX + shipAcceleration * deltaTime * Math.cos(this.direction);
+    this.speedX = Math.sign(speedX) * Math.min(shipMaxSpeed, Math.abs(speedX));
 
     const speedY =
-      this.speedY + acceleration * deltaTime * Math.sin(this.direction);
-    this.speedY = Math.sign(speedY) * Math.min(maxSpeed, Math.abs(speedY));
+      this.speedY + shipAcceleration * deltaTime * Math.sin(this.direction);
+    this.speedY = Math.sign(speedY) * Math.min(shipMaxSpeed, Math.abs(speedY));
   }
 
   #shoot() {

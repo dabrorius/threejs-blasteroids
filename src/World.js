@@ -1,10 +1,20 @@
-import * as THREE from "three";
+import GUI from "lil-gui";
+
 import { Asteroid } from "./Asteroid";
 import { Spaceship } from "./Spaceship";
+
+const guiConfig = {
+  shipMaxSpeed: 5,
+  shipAcceleration: 30,
+};
+const gui = new GUI({ title: "Game configuration" });
+gui.add(guiConfig, "shipMaxSpeed", 1, 10, 0.5).name("Ship speed");
+gui.add(guiConfig, "shipAcceleration", 5, 100, 0.5).name("Ship acceleration");
 
 export class World {
   constructor(scene) {
     this.scene = scene;
+    this.guiConfig = guiConfig;
 
     const spaceship = new Spaceship();
     this.addEntity(spaceship);
