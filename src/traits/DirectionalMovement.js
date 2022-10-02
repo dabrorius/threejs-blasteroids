@@ -13,6 +13,7 @@ export function DirectionalMovement(
     update: (deltaTime) => {
       const speedX = Math.cos(direction) * speed;
       const speedY = Math.sin(direction) * speed;
+      console.log("DT ->", deltaTime, speedX, speedY);
 
       position.x += speedX * deltaTime;
       position.y += speedY * deltaTime;
@@ -37,5 +38,15 @@ export function DirectionalMovement(
     setDirection: (newDirection) => (direction = newDirection),
     setSpeed: (newSpeed) => (speed = newSpeed),
     getDirection: () => direction,
+    log: () => {
+      console.log(
+        "Moving at ",
+        speed,
+        " towards ",
+        direction,
+        "currently @ ",
+        position
+      );
+    },
   };
 }
