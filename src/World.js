@@ -6,7 +6,7 @@ export class World {
   constructor(scene) {
     this.scene = scene;
 
-    const spaceship = Spaceship(this);
+    const spaceship = new Spaceship();
     this.addEntity(spaceship);
 
     this.addEntity(new Asteroid(3, 3, 3, Math.random() * (Math.PI / 2)));
