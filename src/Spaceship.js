@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { BulletFactory } from "./BulletFactory";
+import { Bullet } from "./Bullet";
 import textureImage from "./textures/8.png";
 
 export function Spaceship(world) {
@@ -9,8 +9,6 @@ export function Spaceship(world) {
   const shipGeomtery = new THREE.ConeGeometry(0.3, 1, 8);
   const shipMaterial = new THREE.MeshMatcapMaterial({ matcap: matcapTexture });
   const ship = new THREE.Mesh(shipGeomtery, shipMaterial);
-
-  const bulletFactory = BulletFactory();
 
   // const movement = DirectionalMovement();
   const turnSpeed = Math.PI;
@@ -60,10 +58,7 @@ export function Spaceship(world) {
 
       if (pressedKeys.has(" ")) {
         if (bulletTimer === 0) {
-          const bullet = bulletFactory(
-            { x: position.x, y: position.y },
-            direction
-          );
+          const bullet = new Bullet(position.x, position.y, direction);
           world.addEntity(bullet);
           bulletTimer = bulletDelay;
         }
