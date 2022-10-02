@@ -6,14 +6,13 @@ export function DirectionalMovement(
 
   let speed = 0;
   let direction = 0;
-  const warpX = 10;
+  const warpX = 15;
   const warpY = 10;
 
   return {
     update: (deltaTime) => {
       const speedX = Math.cos(direction) * speed;
       const speedY = Math.sin(direction) * speed;
-      console.log("DT ->", deltaTime, speedX, speedY);
 
       position.x += speedX * deltaTime;
       position.y += speedY * deltaTime;

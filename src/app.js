@@ -50,7 +50,7 @@ document.addEventListener("keyup", (event) => {
   pressedKeys.delete(event.key);
 });
 
-const updateWorld = World(scene);
+const world = new World(scene);
 
 /**
  * Game Loop - world rendering
@@ -62,7 +62,7 @@ const gameLoop = () => {
   const deltaTime = currentTime - lastTime;
   lastTime = currentTime;
 
-  updateWorld(deltaTime, pressedKeys);
+  world.update(deltaTime, pressedKeys);
   renderer.render(scene, camera);
 
   window.requestAnimationFrame(gameLoop);
