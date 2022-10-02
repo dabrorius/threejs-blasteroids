@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { DirectionalMovement } from "./traits/DirectionalMovement";
+import { translate } from "./translate";
 
 const maxSize = 3;
 
@@ -15,10 +15,7 @@ export class Asteroid {
     this.position = { x, y };
     this.direction =
       direction === null ? Math.PI * 2 * Math.random() : direction;
-
-    this.movement = DirectionalMovement(this.position);
-    this.movement.setSpeed(1 + (maxSize - size) / 2);
-    this.movement.setDirection(this.direction);
+    this.speed = 1 + (maxSize - size) / 2;
 
     this.mesh = new THREE.Mesh(asteroidGeometry, asteroidMaterial);
     const scale = size / maxSize;
@@ -36,7 +33,11 @@ export class Asteroid {
   }
 
   update(deltaTime) {
-    this.position = this.movement.update(deltaTime);
+    this.position = translate(
+      this.position,
+      this.direction,
+      this.speed * deltaTime
+    );
 
     this.mesh.position.x = this.position.x;
     this.mesh.position.y = this.position.y;

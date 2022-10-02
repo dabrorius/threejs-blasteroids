@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { DirectionalMovement } from "./traits/DirectionalMovement";
+import { translate } from "./translate";
 
 const bulletGeometry = new THREE.DodecahedronGeometry(0.1);
 const bulletMaterial = new THREE.MeshNormalMaterial();
@@ -8,10 +8,7 @@ export class Bullet {
   constructor(x, y, direction) {
     this.position = { x, y };
     this.direction = direction;
-
-    this.movement = DirectionalMovement(this.position, false);
-    this.movement.setSpeed(30);
-    this.movement.setDirection(direction);
+    this.speed = 40;
 
     this.mesh = new THREE.Mesh(bulletGeometry, bulletMaterial);
 
@@ -24,12 +21,16 @@ export class Bullet {
   }
 
   update(deltaTime) {
-    const position = this.movement.update(deltaTime);
+    this.position = translate(
+      this.position,
+      this.direction,
+      this.speed * deltaTime
+    );
 
-    this.mesh.position.x = position.x;
-    this.mesh.position.y = position.y;
+    this.mesh.position.x = this.position.x;
+    this.mesh.position.y = this.position.y;
 
-    this.hitbox.x = position.x;
-    this.hitbox.y = position.y;
+    this.hitbox.x = this.position.x;
+    this.hitbox.y = this.position.y;
   }
 }
