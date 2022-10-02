@@ -9,8 +9,7 @@ const asteroidMaterial = new THREE.MeshNormalMaterial();
 const randomRotationSpeed = () => (Math.random() * Math.PI) / 4 + Math.PI / 8;
 
 export class Asteroid {
-  constructor(world, x, y, size, direction = null) {
-    this.world = world;
+  constructor(x, y, size, direction = null) {
     this.size = size;
     this.position = { x, y };
     this.direction =
@@ -53,7 +52,6 @@ export class Asteroid {
       if (this.size > 1) {
         const childSize = this.size - 1;
         const asteroidOne = new Asteroid(
-          this.world,
           this.position.x,
           this.position.y,
           childSize
@@ -61,7 +59,6 @@ export class Asteroid {
         this.world.addEntity(asteroidOne);
         this.world.addEntity(
           new Asteroid(
-            this.world,
             this.position.x,
             this.position.y,
             childSize,

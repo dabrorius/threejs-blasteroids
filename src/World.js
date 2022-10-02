@@ -9,15 +9,13 @@ export class World {
     const spaceship = Spaceship(this);
     this.addEntity(spaceship);
 
-    this.addEntity(new Asteroid(this, 3, 3, 3, Math.random() * (Math.PI / 2)));
+    this.addEntity(new Asteroid(3, 3, 3, Math.random() * (Math.PI / 2)));
+    this.addEntity(new Asteroid(3, -3, 3, -Math.random() * (Math.PI / 2)));
     this.addEntity(
-      new Asteroid(this, 3, -3, 3, -Math.random() * (Math.PI / 2))
+      new Asteroid(-3, -3, 3, Math.PI + Math.random() * (Math.PI / 2))
     );
     this.addEntity(
-      new Asteroid(this, -3, -3, 3, Math.PI + Math.random() * (Math.PI / 2))
-    );
-    this.addEntity(
-      new Asteroid(this, -3, 3, 3, Math.PI - Math.random() * (Math.PI / 2))
+      new Asteroid(-3, 3, 3, Math.PI - Math.random() * (Math.PI / 2))
     );
   }
 
@@ -67,6 +65,7 @@ export class World {
       if (entity.mesh) {
         this.scene.add(entity.mesh);
       }
+      entity.world = this;
     });
     this.entitiesToAdd = [];
   }
