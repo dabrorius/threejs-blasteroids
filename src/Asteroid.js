@@ -21,8 +21,8 @@ export class Asteroid {
     this.mesh.scale.multiplyScalar(scale);
 
     this.hitbox = {
-      x: 0,
-      y: 0,
+      x,
+      y,
       r: scale,
       type: "asteroid",
     };
@@ -48,6 +48,11 @@ export class Asteroid {
   }
 
   onCollision(collider) {
+    if (collider.hitbox.type === "spaceship") {
+      this.world.removeEntity(this);
+      this.world.removeEntity(collider);
+    }
+
     if (collider.hitbox.type === "bullet") {
       if (this.size > 1) {
         const childSize = this.size - 1;

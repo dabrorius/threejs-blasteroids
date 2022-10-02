@@ -22,6 +22,13 @@ export class Spaceship {
     this.speedX = 0;
     this.speedY = 0;
     this.direction = 0;
+
+    this.hitbox = {
+      x: 0,
+      y: 0,
+      r: 0.5,
+      type: "spaceship",
+    };
   }
 
   update(deltaTime, pressedKeys) {
@@ -33,6 +40,9 @@ export class Spaceship {
     this.mesh.position.x = this.position.x;
     this.mesh.position.y = this.position.y;
     this.mesh.rotation.z = this.direction - Math.PI / 2;
+
+    this.hitbox.x = this.position.x;
+    this.hitbox.y = this.position.y;
 
     if (pressedKeys.has("ArrowUp")) {
       this.#accelerate(deltaTime);
