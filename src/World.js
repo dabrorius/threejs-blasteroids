@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { AsteroidFactory } from "./AsteroidFactory";
+import { Asteroid } from "./Asteroid";
 import { Spaceship } from "./Spaceship";
 
 export class World {
@@ -9,26 +9,15 @@ export class World {
     const spaceship = Spaceship(this);
     this.addEntity(spaceship);
 
-    const asteroidFactory = AsteroidFactory(this);
+    this.addEntity(new Asteroid(this, 3, 3, 3, Math.random() * (Math.PI / 2)));
     this.addEntity(
-      asteroidFactory({ x: 3, y: 3 }, 3, Math.random() * (Math.PI / 2))
+      new Asteroid(this, 3, -3, 3, -Math.random() * (Math.PI / 2))
     );
     this.addEntity(
-      asteroidFactory({ x: 3, y: -3 }, 3, -Math.random() * (Math.PI / 2))
+      new Asteroid(this, -3, -3, 3, Math.PI + Math.random() * (Math.PI / 2))
     );
     this.addEntity(
-      asteroidFactory(
-        { x: -3, y: -3 },
-        3,
-        Math.PI + Math.random() * (Math.PI / 2)
-      )
-    );
-    this.addEntity(
-      asteroidFactory(
-        { x: -3, y: 3 },
-        3,
-        Math.PI - Math.random() * (Math.PI / 2)
-      )
+      new Asteroid(this, -3, 3, 3, Math.PI - Math.random() * (Math.PI / 2))
     );
   }
 
