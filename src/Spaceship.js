@@ -1,6 +1,9 @@
 import * as THREE from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+
 import { Bullet } from "./Bullet";
 import textureImage from "./textures/8.png";
+import shipModel from "./objects/tyrian.glb";
 
 const textureLoader = new THREE.TextureLoader();
 const matcapTexture = textureLoader.load(textureImage);
@@ -11,9 +14,22 @@ const shipMaterial = new THREE.MeshMatcapMaterial({ matcap: matcapTexture });
 const bulletDelay = 0.1;
 const turnSpeed = Math.PI;
 
+const loader = new GLTFLoader();
+
 export class Spaceship {
   constructor() {
-    this.mesh = new THREE.Mesh(shipGeomtery, shipMaterial);
+    this.mesh = new THREE.Group();
+
+    loader.load(
+      shipModel,
+      (gltf) => {
+        gltf.scene.scale.multiplyScalar(0.8);
+        gltf.scene.rotation.y = -Math.PI / 2;
+        this.mesh.add(gltf.scene);
+      },
+      (xhr) => console.log((xhr.loaded / xhr.total) * 100 + "% loaded"),
+      (error) => console.log("An error happened", error)
+    );
 
     this.bulletTimer = 0;
     this.position = { x: 0, y: 0 };
@@ -24,7 +40,7 @@ export class Spaceship {
     this.hitbox = {
       x: 0,
       y: 0,
-      r: 0.5,
+      r: 0.8,
       type: "spaceship",
     };
   }
