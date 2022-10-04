@@ -22,11 +22,6 @@ scene.add(camera);
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
 scene.add(ambientLight);
 
-const directionLight = new THREE.DirectionalLight(0xffffff, 0.5);
-directionLight.target.position.set(0, 0, -1);
-scene.add(directionLight);
-scene.add(directionLight.target);
-
 const canvas = document.querySelector(".gameCanvas");
 const renderer = new THREE.WebGLRenderer({ canvas });
 const updateRenderer = () => {
