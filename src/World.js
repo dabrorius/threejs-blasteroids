@@ -79,6 +79,9 @@ export class World {
         this.scene.add(entity.mesh);
       }
       entity.world = this;
+      if (entity.onAdded) {
+        entity.onAdded();
+      }
     });
     this.entitiesToAdd = [];
   }
