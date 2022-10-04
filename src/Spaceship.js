@@ -16,15 +16,8 @@ export class Spaceship {
   constructor() {
     this.mesh = new THREE.Group();
 
-    this.engineLight = new THREE.PointLight(0xddddff, 0);
+    this.engineLight = new THREE.PointLight(0xddddff, 0, 8);
     this.engineLight.position.set(-0.5, 0, 0.3);
-
-    const helper = new THREE.PointLightHelper(this.engineLight);
-
-    const boxxy = new THREE.Mesh(
-      new THREE.BoxGeometry(1, 1, 1),
-      new THREE.MeshBasicMaterial({ color: "greem" })
-    );
 
     this.mesh.add(this.engineLight);
 

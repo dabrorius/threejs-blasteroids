@@ -1,4 +1,15 @@
 import * as THREE from "three";
+import particleImage from "./textures/bg.jpg";
+
+const textureLoader = new THREE.TextureLoader();
+const bgTexture = textureLoader.load(particleImage);
+const bgMaterial = new THREE.SpriteMaterial({
+  map: bgTexture,
+  color: 0xccbbff,
+});
+const background = new THREE.Sprite(bgMaterial);
+background.scale.set(170, 80, 1);
+background.position.set(0, 0, -70);
 
 const particleGeometry = new THREE.BufferGeometry();
 const starCount = 2000;
@@ -26,10 +37,14 @@ particleMaterial.sizeAttenuation = true;
 
 export class Background {
   constructor() {
-    this.mesh = new THREE.Points(particleGeometry, particleMaterial);
+    this.mesh = new THREE.Group();
+    this.stars = new THREE.Points(particleGeometry, particleMaterial);
+    this.mesh.add(this.stars);
+
+    this.mesh.add(background);
   }
 
   update(deltaTime) {
-    this.mesh.rotation.y += deltaTime / 100;
+    this.stars.rotation.y += deltaTime / 100;
   }
 }
