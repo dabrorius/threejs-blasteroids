@@ -17,17 +17,18 @@ export class World {
     this.scene = scene;
     this.guiConfig = guiConfig;
 
-    const spaceship = new Spaceship();
-    this.addEntity(spaceship);
+    this.spaceship = new Spaceship();
+    this.addEntity(this.spaceship);
 
-    this.addEntity(new Asteroid(3, 3, 3, Math.random() * (Math.PI / 2)));
-    this.addEntity(new Asteroid(3, -3, 3, -Math.random() * (Math.PI / 2)));
-    this.addEntity(
-      new Asteroid(-3, -3, 3, Math.PI + Math.random() * (Math.PI / 2))
-    );
-    this.addEntity(
-      new Asteroid(-3, 3, 3, Math.PI - Math.random() * (Math.PI / 2))
-    );
+    for (let i = 0; i < 6; i++) {
+      const direction = Math.PI * 2 * Math.random();
+      const distance = 4 + Math.random() * 3;
+
+      const x = Math.cos(direction) * distance;
+      const y = Math.sin(direction) * distance;
+
+      this.addEntity(new Asteroid(x, y, 3, Math.random() * Math.PI * 2));
+    }
 
     this.addEntity(new Background());
   }
