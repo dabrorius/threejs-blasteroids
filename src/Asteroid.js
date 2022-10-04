@@ -1,10 +1,23 @@
 import * as THREE from "three";
 import { translate } from "./translate";
+import textureBaseImage from "./textures/Rock_044_BaseColor.jpg";
+import textureNormalImage from "./textures/Rock_044_Normal.jpg";
+import textureHeightImage from "./textures/Rock_044_Height.png";
 
 const maxSize = 3;
 
-const asteroidGeometry = new THREE.DodecahedronGeometry(1);
-const asteroidMaterial = new THREE.MeshNormalMaterial();
+const textureLoader = new THREE.TextureLoader();
+const textureBase = textureLoader.load(textureBaseImage);
+const textureNormal = textureLoader.load(textureNormalImage);
+const textureHeight = textureLoader.load(textureHeightImage);
+
+const asteroidGeometry = new THREE.SphereGeometry(0.5, 16, 16);
+const asteroidMaterial = new THREE.MeshStandardMaterial({
+  map: textureBase,
+  normalMap: textureNormal,
+  displacementMap: textureHeight,
+  displacementScale: 0.3,
+});
 
 const randomRotationSpeed = () => (Math.random() * Math.PI) / 4 + Math.PI / 8;
 
@@ -37,6 +50,19 @@ export class Asteroid {
       this.direction,
       this.speed * deltaTime
     );
+    const warpLimit = 10;
+    if (this.position.x > warpLimit) {
+      this.position.x = -warpLimit;
+    }
+    if (this.position.x < -warpLimit) {
+      this.position.x = warpLimit;
+    }
+    if (this.position.y > warpLimit) {
+      this.position.y = -warpLimit;
+    }
+    if (this.position.y < -warpLimit) {
+      this.position.y = warpLimit;
+    }
 
     this.mesh.position.x = this.position.x;
     this.mesh.position.y = this.position.y;
