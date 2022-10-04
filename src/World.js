@@ -2,6 +2,7 @@ import GUI from "lil-gui";
 
 import { Asteroid } from "./Asteroid";
 import { Spaceship } from "./Spaceship";
+import { Background } from "./Background";
 
 const guiConfig = {
   shipMaxSpeed: 5,
@@ -27,6 +28,8 @@ export class World {
     this.addEntity(
       new Asteroid(-3, 3, 3, Math.PI - Math.random() * (Math.PI / 2))
     );
+
+    this.addEntity(new Background());
   }
 
   /**

@@ -14,12 +14,12 @@ const camera = new THREE.PerspectiveCamera(
   100
 );
 camera.position.z = 20;
-camera.position.y = -2;
+camera.position.y = 0;
 camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 scene.add(camera);
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
 scene.add(ambientLight);
 
 const directionLight = new THREE.DirectionalLight(0xffffff, 0.5);

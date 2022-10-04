@@ -3,13 +3,10 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 import { Bullet } from "./Bullet";
 import textureImage from "./textures/8.png";
-import shipModel from "./objects/tyrian.glb";
+import shipModel from "./objects/cuship.glb";
 
 const textureLoader = new THREE.TextureLoader();
 const matcapTexture = textureLoader.load(textureImage);
-
-const shipGeomtery = new THREE.ConeGeometry(0.3, 1, 8);
-const shipMaterial = new THREE.MeshMatcapMaterial({ matcap: matcapTexture });
 
 const bulletDelay = 0.1;
 const turnSpeed = Math.PI;
@@ -24,7 +21,7 @@ export class Spaceship {
       shipModel,
       (gltf) => {
         gltf.scene.scale.multiplyScalar(0.8);
-        gltf.scene.rotation.y = -Math.PI / 2;
+        gltf.scene.rotation.x = Math.PI / 2;
         this.mesh.add(gltf.scene);
       },
       (xhr) => console.log((xhr.loaded / xhr.total) * 100 + "% loaded"),
